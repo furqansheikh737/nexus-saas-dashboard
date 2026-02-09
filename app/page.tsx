@@ -2,8 +2,17 @@
 
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-import { Zap, Shield, BarChart3, Globe, ArrowRight, Play } from 'lucide-react';
-
+import { 
+  LayoutDashboard, 
+  BarChart2, 
+  Users, 
+  Shield,
+  BarChart3,
+  Play,
+  Settings, 
+  Zap 
+} from 'lucide-react'; // In icons ko import karna zaroori hai
+import { cn } from '@/lib/utils';
 export default function LandingPage() {
   return (
     <div className="bg-[#030712] text-white min-h-screen selection:bg-indigo-500/30 overflow-x-hidden">
@@ -68,16 +77,123 @@ export default function LandingPage() {
             </Button>
           </div>
 
-          {/* Abstract Dashboard Mockup Container */}
-          <div className="mt-20 relative max-w-5xl mx-auto">
-             <div className="absolute inset-0 bg-gradient-to-t from-[#030712] via-transparent to-transparent z-10" />
-             <div className="rounded-2xl border border-white/10 bg-white/5 p-2 backdrop-blur-sm">
-                <div className="rounded-xl border border-white/10 bg-[#0b0f1a] aspect-video flex items-center justify-center overflow-hidden">
-                   {/* This represents where your real dashboard screenshot or video would go */}
-                   <BarChart3 className="h-20 w-20 text-indigo-500/20" />
-                </div>
-             </div>
+         {/* Dashboard Mockup Container */}
+<div className="relative mt-20 group perspective-1000">
+  {/* Hyper-Realistic Glow behind the container */}
+  <div className="absolute -inset-4 bg-gradient-to-r from-indigo-500/20 via-purple-500/20 to-pink-500/20 rounded-[40px] blur-3xl opacity-50 group-hover:opacity-100 transition duration-1000"></div>
+  
+  <div className="relative rounded-[24px] border border-white/10 bg-[#0b0f1a]/80 backdrop-blur-2xl overflow-hidden shadow-[0_0_50px_-12px_rgba(0,0,0,0.5)] transform transition-all duration-700 group-hover:scale-[1.01] group-hover:border-white/20">
+    
+    {/* Window Header (Browser Style) */}
+    <div className="h-12 border-b border-white/5 bg-white/[0.02] flex items-center px-5 justify-between">
+      <div className="flex gap-2">
+        <div className="w-3 h-3 rounded-full bg-[#ff5f56] shadow-[0_0_10px_rgba(255,95,86,0.3)]"></div>
+        <div className="w-3 h-3 rounded-full bg-[#ffbd2e]"></div>
+        <div className="w-3 h-3 rounded-full bg-[#27c93f]"></div>
+      </div>
+      <div className="flex items-center gap-2 bg-white/5 px-4 py-1.5 rounded-lg border border-white/5">
+        <div className="w-3 h-3 text-slate-500"><Zap size={12} /></div>
+        <span className="text-[11px] text-slate-400 font-medium tracking-tight">nexus.ai/dashboard/analytics</span>
+      </div>
+      <div className="w-12"></div> {/* Spacer */}
+    </div>
+
+    {/* Mockup Body */}
+    <div className="aspect-video flex overflow-hidden">
+      {/* Sidebar Mockup */}
+      <div className="w-56 border-r border-white/5 p-4 space-y-6 hidden md:block bg-white/[0.01]">
+        <div className="space-y-2">
+          {[
+            { icon: LayoutDashboard, label: 'Overview', active: true },
+            { icon: BarChart2, label: 'Analytics', active: false },
+            { icon: Users, label: 'Customers', active: false },
+            { icon: Settings, label: 'Settings', active: false },
+          ].map((item, i) => (
+            <div key={i} className={cn(
+              "flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] font-medium transition-all",
+              item.active ? "bg-indigo-600/10 text-indigo-400 border border-indigo-500/20" : "text-slate-500 hover:text-slate-300"
+            )}>
+              <item.icon size={14} /> {item.label}
+            </div>
+          ))}
+        </div>
+        <div className="pt-10 space-y-4">
+          <div className="h-[1px] bg-white/5 w-full"></div>
+          <div className="px-3 space-y-3">
+             <div className="h-2 w-full bg-white/5 rounded-full"></div>
+             <div className="h-2 w-2/3 bg-white/5 rounded-full"></div>
           </div>
+        </div>
+      </div>
+
+      {/* Main Panel Mockup */}
+      <div className="flex-1 p-8 overflow-hidden bg-gradient-to-br from-transparent to-indigo-500/[0.02]">
+        {/* Top Cards */}
+        <div className="grid grid-cols-3 gap-5 mb-8">
+          {[
+            { label: 'Total Revenue', value: '$45,231', trend: '+12.5%', color: 'text-emerald-400' },
+            { label: 'Active Users', value: '12,402', trend: '+8.2%', color: 'text-indigo-400' },
+            { label: 'Conversion', value: '3.24%', trend: '-1.4%', color: 'text-rose-400' },
+          ].map((stat, i) => (
+            <div key={i} className="p-4 rounded-2xl bg-white/[0.03] border border-white/5 hover:bg-white/[0.05] transition-colors">
+              <p className="text-[10px] uppercase tracking-wider text-slate-500 font-bold mb-1">{stat.label}</p>
+              <h4 className="text-xl font-bold text-white mb-1">{stat.value}</h4>
+              <span className={cn("text-[10px] font-medium", stat.color)}>{stat.trend} from last month</span>
+            </div>
+          ))}
+        </div>
+
+        {/* Large Visual Chart Area */}
+        <div className="relative h-56 w-full bg-white/[0.02] border border-white/10 rounded-3xl p-6 overflow-hidden">
+          <div className="flex justify-between items-start mb-4">
+            <div>
+              <h5 className="text-sm font-bold text-white">Revenue Growth</h5>
+              <p className="text-[10px] text-slate-500">Real-time data visualization</p>
+            </div>
+            <div className="flex gap-2">
+              <div className="h-6 w-12 bg-white/5 rounded-md"></div>
+              <div className="h-6 w-12 bg-indigo-600/20 border border-indigo-500/30 rounded-md"></div>
+            </div>
+          </div>
+          
+          {/* Animated SVG Path for Line Chart */}
+          <svg className="w-full h-32 overflow-visible">
+            <path 
+              d="M0 80 Q 100 20, 200 60 T 400 30 T 600 70 T 800 10" 
+              fill="none" 
+              stroke="url(#lineGradient)" 
+              strokeWidth="3" 
+              className="animate-dash"
+              style={{ strokeDasharray: 1000, strokeDashoffset: 1000 }}
+            />
+            <defs>
+              <linearGradient id="lineGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stopColor="#6366f1" />
+                <stop offset="100%" stopColor="#a855f7" />
+              </linearGradient>
+            </defs>
+          </svg>
+
+          {/* Decorative Grid Lines */}
+          <div className="absolute inset-0 grid grid-cols-6 grid-rows-4 pointer-events-none opacity-20">
+            {[...Array(24)].map((_, i) => (
+              <div key={i} className="border-[0.5px] border-white/10"></div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style jsx>{`
+  @keyframes dash {
+    to { stroke-dashoffset: 0; }
+  }
+  .animate-dash {
+    animation: dash 3s ease-in-out forwards;
+  }
+`}</style>
         </div>
       </section>
 
