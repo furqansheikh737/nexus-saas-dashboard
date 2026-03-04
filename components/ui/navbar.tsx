@@ -21,18 +21,18 @@ export function Navbar() {
 
   return (
     <nav className="fixed top-0 w-full z-[100] border-b border-white/5 bg-[#030712] h-16">
-      <div className="container mx-auto h-full flex items-center justify-between px-6">
+      <div className="container mx-auto h-full flex items-center justify-between px-6 relative">
         
         {/* LEFT: Logo */}
-        <Link href="/" className="flex items-center gap-2 font-bold text-xl tracking-tighter text-white">
+        <Link href="/" className="flex items-center gap-2 font-bold text-xl tracking-tighter text-white z-10">
           <div className="bg-indigo-600 p-1 rounded-lg">
             <Zap className="h-5 w-5 fill-white" />
           </div>
           <span className="font-bold text-xl tracking-tighter uppercase italic">Nexus</span>
         </Link>
 
-        {/* DESKTOP NAV (Hidden on Mobile) */}
-        <div className="hidden md:flex items-center gap-8">
+        {/* CENTER: Nav Links (Desktop Only) */}
+        <div className="hidden md:flex items-center gap-8 absolute left-1/2 -translate-x-1/2">
           {navLinks.map((link) => (
             <Link
               key={link.href}
@@ -45,21 +45,30 @@ export function Navbar() {
               {link.name}
             </Link>
           ))}
-          <div className="flex items-center gap-4 ml-4">
-            <Link href="/login" className="text-sm font-medium text-slate-400 hover:text-white">Login</Link>
-            <Link href="/signup">
-              <Button className="bg-white text-black hover:bg-slate-200 rounded-full px-6 text-xs h-9">Get Started</Button>
-            </Link>
-          </div>
         </div>
 
-        {/* RIGHT: Hamburger Menu Button (Mobile Only) */}
-        <button 
-          onClick={() => setIsOpen(!isOpen)}
-          className="md:hidden p-2 text-white transition-colors"
-        >
-          {isOpen ? <X size={28} /> : <Menu size={28} />}
-        </button>
+        {/* RIGHT: Desktop Auth & Mobile Toggle */}
+        <div className="flex items-center gap-4 z-10">
+          {/* Desktop Auth Buttons */}
+          <div className="hidden md:flex items-center gap-4">
+            <Link href="/login" className="text-sm font-medium text-slate-400 hover:text-white">
+              Login
+            </Link>
+            <Link href="/signup">
+              <Button className="bg-white text-black hover:bg-slate-200 rounded-full px-6 text-xs h-9">
+                Get Started
+              </Button>
+            </Link>
+          </div>
+
+          {/* Hamburger Menu Button (Mobile Only) */}
+          <button 
+            onClick={() => setIsOpen(!isOpen)}
+            className="md:hidden p-2 text-white transition-colors"
+          >
+            {isOpen ? <X size={28} /> : <Menu size={28} />}
+          </button>
+        </div>
       </div>
 
       {/* MOBILE MENU OVERLAY (MyPerfectResume Style) */}
