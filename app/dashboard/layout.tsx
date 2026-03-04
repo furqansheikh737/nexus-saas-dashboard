@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { LayoutDashboard, Settings, LogOut, Menu, Bell, Zap, BarChart2, Users } from 'lucide-react';
+import { LayoutDashboard, Settings, LogOut, Menu, Bell, Zap, BarChart2, Users, X } from 'lucide-react';
 import { UserNav } from '@/components/dashboard/user-nav';
 import { cn } from '@/lib/utils';
 import { auth } from '@/lib/firebase';
@@ -33,22 +33,23 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   return (
     <div className="flex h-screen bg-[#030712] overflow-hidden text-white font-sans">
       
-      {/* Mobile Sidebar Overlay */}
-      {sidebarOpen && (
-        <div 
-          className="fixed inset-0 bg-black/60 backdrop-blur-md z-40 lg:hidden"
-          onClick={() => setSidebarOpen(false)}
-        />
-      )}
+      {/* Mobile Sidebar Overlay with Backdrop Blur */}
+      <div 
+        className={cn(
+          "fixed inset-0 bg-black/60 backdrop-blur-md z-[60] lg:hidden transition-opacity duration-300",
+          sidebarOpen ? "opacity-100" : "opacity-0 pointer-events-none"
+        )}
+        onClick={() => setSidebarOpen(false)}
+      />
 
-      {/* Sidebar */}
+      {/* Sidebar (Desktop & Mobile Slide-in Animation) */}
       <aside className={cn(
-        "fixed inset-y-0 left-0 z-50 w-64 bg-[#0b0f1a] border-r border-white/5 transition-transform duration-300 lg:static lg:translate-x-0",
+        "fixed inset-y-0 left-0 z-[70] w-64 bg-[#0b0f1a] border-r border-white/5 transition-transform duration-300 ease-in-out lg:static lg:translate-x-0",
         sidebarOpen ? "translate-x-0" : "-translate-x-full"
       )}>
-        {/* Brand Logo */}
+        {/* Brand Logo inside Sidebar */}
         <div className="h-16 flex items-center px-6 gap-2 border-b border-white/5 bg-[#0b0f1a]">
-          <div className="bg-indigo-600 p-1 rounded-lg">
+          <div className="bg-indigo-600 p-1 rounded-lg shadow-[0_0_10px_rgba(79,70,229,0.4)]">
             <Zap className="h-5 w-5 text-white fill-white" />
           </div>
           <span className="font-bold text-xl tracking-tighter uppercase italic">Nexus</span>
@@ -93,26 +94,33 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
       {/* Main Content Area */}
       <div className="flex-1 flex flex-col min-w-0 bg-[#030712]">
         {/* Header */}
-        <header className="h-16 border-b border-white/5 bg-[#030712]/50 backdrop-blur-xl flex items-center justify-between px-6 sticky top-0 z-30">
-          <button 
-            onClick={() => setSidebarOpen(true)} 
-            className="lg:hidden p-2 text-slate-400 hover:bg-white/5 rounded-lg transition-colors"
-          >
-            <Menu className="h-6 w-6" />
-          </button>
+        <header className="h-16 border-b border-white/5 bg-[#030712]/50 backdrop-blur-xl flex items-center justify-between px-6 sticky top-0 z-50">
           
-          <div className="flex items-center gap-4 ml-auto">
-            {/* Notification Bell with Pulse */}
+          {/* LEFT SIDE: Logo (Only visible on mobile) */}
+          <div className="flex items-center gap-2 lg:hidden">
+            <div className="bg-indigo-600 p-1 rounded-lg">
+              <Zap className="h-5 w-5 text-white fill-white" />
+            </div>
+            <span className="font-bold text-xl tracking-tighter uppercase italic text-white">Nexus</span>
+          </div>
+
+          <div className="flex items-center gap-2 ml-auto">
+            {/* Notification Bell */}
             <button className="p-2.5 text-slate-400 hover:text-white hover:bg-white/5 rounded-full relative transition-all">
               <Bell className="h-5 w-5" />
               <span className="absolute top-2.5 right-2.5 h-2 w-2 bg-indigo-500 rounded-full border-2 border-[#030712]" />
             </button>
 
-            {/* Vertical Divider */}
-            <div className="h-6 w-px bg-white/10 hidden sm:block" />
-            
-            {/* Dynamic User Profile */}
+            {/* User Profile */}
             <UserNav />
+
+            {/* RIGHT SIDE: Hamburger Menu Button (Mobile Only) */}
+            <button 
+              onClick={() => setSidebarOpen(!sidebarOpen)} 
+              className="lg:hidden p-2 text-white hover:bg-white/5 rounded-lg transition-all ml-1"
+            >
+              {sidebarOpen ? <X size={26} /> : <Menu size={26} />}
+            </button>
           </div>
         </header>
 

@@ -39,7 +39,7 @@ export default function PricingPage() {
         <div className="text-center max-w-3xl mx-auto mb-20">
           <div className="text-center max-w-5xl mx-auto mb-20 px-4">
   {/* Single line heading with split colors */}
-  <h1 className="text-4xl md:text-6xl lg:text-7xl font-extrabold tracking-tighter leading-tight">
+  <h1 className="text-5xl md:text-7xl font-extrabold tracking-tighter">
     <span className="text-white">Scale your </span>
     <span className="bg-gradient-to-r from-indigo-400 to-indigo-600 bg-clip-text text-transparent">
       business.

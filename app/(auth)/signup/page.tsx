@@ -128,7 +128,7 @@ const handleGoogleLogin = async () => {
               disabled={loading}
               className="w-full h-14 bg-indigo-600 hover:bg-indigo-500 text-white rounded-2xl font-black text-base shadow-xl shadow-indigo-600/20 transition-all mt-4"
             >
-              {loading ? <Loader2 className="h-5 w-5 animate-spin" /> : 'Start Building Now'}
+              {loading ? <Loader2 className="h-5 w-5 animate-spin" /> : 'Sign up'}
             </Button>
           </form>
 
